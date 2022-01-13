@@ -1,5 +1,45 @@
+/* INIT */
 const root = document.querySelector("#root");
+const struct = {
+  type: "div", // Hello : Function
+  attributes: {
+    id: "players",
+  },
+  children: [
+    {
+      type: "div", // Hello : Function
+      attributes: {
+        id: "playersList",
+      },
+    },
+    {
+      type: "ul", // Hello : Function
+      attributes: {
+        id: "playersList",
+      },
+      children: [
+        {
+          type: "li",
+          dataset: {
+            position: 1,
+          },
+          children: ["User1"],
+        },
+        {
+          type: "li", //Hello,
+          dataset: {
+            position: 2,
+          },
+          children: ["User2"],
+        },
+      ],
+    },
+  ],
+};
 
+/* PAGE GENERATION */
+
+// Create link
 function link(label, path) {
   return {
     type: "a",
@@ -61,7 +101,7 @@ function Page1() {
                 },
                 children: [
                   data[`${indexRow}-${indexCol}`] ??
-                    `Cell ${indexRow}-${indexCol}`,
+                  `Cell ${indexRow}-${indexCol}`,
                 ],
               })),
             })),
@@ -79,8 +119,16 @@ function Page2() {
   };
 }
 
+String.prototype.interpolate = function(attributes) {
+  return this;
+}
+
+// Root
 function generatePage() {
-  document.title = history.state.title;
+  console.log("history.state");
+  console.log(history);
+
+  document.title = history?.state?.title;
   const currentPath = window.location.pathname;
   let elem;
   switch (currentPath) {
@@ -89,6 +137,9 @@ function generatePage() {
       break;
     case "/page2":
       elem = Page2();
+      break;
+    default:
+      elem = Page1();
       break;
   }
   if (root.firstChild) {
@@ -101,44 +152,6 @@ function generatePage() {
 root.addEventListener("rerender", generatePage);
 
 window.onpopstate = () => root.dispatchEvent(new Event("rerender"));
-//root.appendChild(Page2());
-
-const struct = {
-  type: "div", // Hello : Function
-  attributes: {
-    id: "players",
-  },
-  children: [
-    {
-      type: "div", // Hello : Function
-      attributes: {
-        id: "playersList",
-      },
-    },
-    {
-      type: "ul", // Hello : Function
-      attributes: {
-        id: "playersList",
-      },
-      children: [
-        {
-          type: "li",
-          dataset: {
-            position: 1,
-          },
-          children: ["User1"],
-        },
-        {
-          type: "li", //Hello,
-          dataset: {
-            position: 2,
-          },
-          children: ["User2"],
-        },
-      ],
-    },
-  ],
-};
 
 const generateStructure = (structure) => {
   const node = document.createElement(structure.type);
@@ -172,11 +185,14 @@ const generateStructure = (structure) => {
 
   return node;
 };
+
+// trigger event render page
 root.dispatchEvent(new Event("rerender"));
-//root.appendChild(generateStructure(struct));
+
+/* MINI REACT */
 
 const MiniReact = {
-  Component: class Component {},
+  Component: class Component { },
 };
 
 class Hello extends MiniReact.Component {
@@ -217,10 +233,10 @@ class UserList extends MiniReact.Component {
         user === this.state.currentUser
           ? undefined
           : MiniReact.createElement(
-              "li",
-              { onClick: () => this.setState({ currentUser: user }) },
-              [user]
-            )
+            "li",
+            { onClick: () => this.setState({ currentUser: user }) },
+            [user]
+          )
       )
     );
     return {
