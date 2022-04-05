@@ -1,14 +1,18 @@
 // Prototypes
 
-String.prototype.interpolate = function (createObject) {
+String.prototype.interpolate = function (properties) {
+  
   let string = String(this);
-  const lengthToInterpolate = string.match(/{([^}]*)}/g).length;
+  const nbProps = string.match(/{{([^}]*)}}/g).length;
 
-  for (let i = 0; i < lengthToInterpolate; i++) {
-    let childTextElement = string.match(/{([^}]*)}/);
-    let childTextElementMatch = createObject.props.prop_access(childTextElement[1]);
-    string = string.replace(string.match(/{([^}]*)}/)[0], childTextElementMatch);
+  for (let i = 0; i < nbProps; i++) {
+    let childTextElement = string.match(/{{([^}]*)}}/);
+    let text = childTextElement[1].trim();
+
+    let propExist = properties.props.prop_access(text);
+    if (propExist) string = string.replace(string.match(/{{([^}]*)}}/)[0], properties.props[text]);
   }
+
   return string;
 };
 
@@ -70,31 +74,29 @@ export function type_check(variable, conf) {
   return true;
 }
 
-export function prop_access(obj, path) {
-  if (obj === null) return console.log(`${path} not exist.`);
-  if (path === "" || path === null) return obj;
+ Object.prototype.prop_access = function prop_access(path) {
 
-  const splitedPath = path.split(".");
-  const pathMemory = [];
+  let obj = this;
 
-  for (let i = 0; i < splitedPath.length; i++) {
-    const pathElement = splitedPath[i];
-    pathMemory.push(pathElement);
+  if (path === null || path === "")
+    return false;
 
-    // ça existe, et on est pas arrivé à la fin du chemin
-    if (obj[pathElement] && i !== splitedPath.length - 1) {
-      obj = obj[pathElement];
-    }
+  if (obj === null)
+    return false;
 
-    // ça existe, on est arrivé à la fin du chemin
-    else if (obj[pathElement]) {
-      return obj[pathElement];
-    }
+  let pathArray = path.split('.');
+  let newPath = "";
 
-    // pas trouvé, on affiche la mémoire de chemin
-    else {
-      const erronedPath = pathMemory.join(".");
-      return console.log(`${erronedPath} not exist.`);
-    }
+  for (let i = 0; i < pathArray.length; i++) {
+    obj = obj[pathArray[i]];
+
+    if (i !== 0)
+      newPath += "." + pathArray[i];
+    else
+      newPath = pathArray[i];
+
+    if (obj === undefined)
+      return false;
   }
-}
+  return true;
+} 

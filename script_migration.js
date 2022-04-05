@@ -125,8 +125,6 @@ String.prototype.interpolate = function(attributes) {
 
 // Root
 function generatePage() {
-  console.log("history.state");
-  console.log(history);
 
   document.title = history?.state?.title;
   const currentPath = window.location.pathname;

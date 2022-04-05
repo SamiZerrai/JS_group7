@@ -6,6 +6,13 @@ export class Title extends MiniReact.Component {
     }
 
     render = () => {
-        return MiniReact.createElement("h1", null, "Hello");
+        return MiniReact.createElement("h1", 
+        { id: "my-id" }, 
+        [
+            MiniReact.createElement('span', { props: { prenom: 'Romain', greeting: "comment va ?" }}, 'Hello {{ prenom }} {{ greeting }}'),
+            MiniReact.createElement('ul', null, 
+                    [MiniReact.createElement('li', null, "Labrador"), MiniReact.createElement('li', null, "Saint Bernard")])
+        ]
+        );
     };
 }
