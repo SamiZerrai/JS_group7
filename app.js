@@ -1,0 +1,1 @@
+import { MiniReact } from "./core";
