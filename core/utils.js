@@ -1,12 +1,28 @@
-function type_check_v1(variable, type) {
-  if (variable === null && type === "null") return true;
-  if (Array.isArray(variable) && type === "array") return true;
-  if (Array.isArray(variable) && type === "object") return false;
-  if (variable === null && type === "object") return false;
-  return typeof variable === type;
-}
+String.prototype.interpolate = function(createObject) {
+  let string = String(this);
+
+  const lengthToInterpolate = string.match(/{([^}]*)}/g).length;
+  
+  for (let i = 0; i < lengthToInterpolate; i++) {
+    let childTextElement = string.match(/{([^}]*)}/);
+    let childTextElementMatch = createObject.props.prop_access(childTextElement[1]);
+    string = string.replace(string.match(/{([^}]*)}/)[0], childTextElementMatch);
+  }
+  return string;
+};
+
+
 
 export function type_check(variable, conf) {
+  
+  function type_check_v1(variable, type) {
+    if (variable === null && type === "null") return true;
+    if (Array.isArray(variable) && type === "array") return true;
+    if (Array.isArray(variable) && type === "object") return false;
+    if (variable === null && type === "object") return false;
+    return typeof variable === type;
+  }
+
   let properties = Object.keys(conf);
   let property = "";
   for (property of properties) {
