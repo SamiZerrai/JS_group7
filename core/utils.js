@@ -12,7 +12,7 @@ String.prototype.interpolate = function (createObject) {
   return string;
 };
 
-Object.prototype.isClass = () => {
+Object.prototype.isClass = function () {
   return typeof this === "function" && /^class\s/.test(Function.prototype.toString.call(this));
 };
 
