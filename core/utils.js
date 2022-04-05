@@ -1,8 +1,12 @@
-String.prototype.interpolate = function(createObject) {
+// Prototypes
+
+String.prototype.interpolate = function (createObject) {
+  console.log("interpolate :");
+  console.log(this);
   let string = String(this);
 
   const lengthToInterpolate = string.match(/{([^}]*)}/g).length;
-  
+
   for (let i = 0; i < lengthToInterpolate; i++) {
     let childTextElement = string.match(/{([^}]*)}/);
     let childTextElementMatch = createObject.props.prop_access(childTextElement[1]);
@@ -11,10 +15,13 @@ String.prototype.interpolate = function(createObject) {
   return string;
 };
 
+Object.prototype.isClass = () => {
+  return typeof this === "function" && /^class\s/.test(Function.prototype.toString.call(this));
+};
 
+// Helpers
 
 export function type_check(variable, conf) {
-  
   function type_check_v1(variable, type) {
     if (variable === null && type === "null") return true;
     if (Array.isArray(variable) && type === "array") return true;
