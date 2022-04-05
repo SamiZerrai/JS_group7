@@ -99,10 +99,7 @@ function Page1() {
                 attributes: {
                   onClick: tdClickHandler,
                 },
-                children: [
-                  data[`${indexRow}-${indexCol}`] ??
-                  `Cell ${indexRow}-${indexCol}`,
-                ],
+                children: [data[`${indexRow}-${indexCol}`] ?? `Cell ${indexRow}-${indexCol}`],
               })),
             })),
           },
@@ -119,13 +116,12 @@ function Page2() {
   };
 }
 
-String.prototype.interpolate = function(attributes) {
+String.prototype.interpolate = function (attributes) {
   return this;
-}
+};
 
 // Root
 function generatePage() {
-
   document.title = history?.state?.title;
   const currentPath = window.location.pathname;
   let elem;
@@ -172,9 +168,7 @@ const generateStructure = (structure) => {
     for (let child of structure.children) {
       if (child === undefined) continue;
       if (typeof child === "string") {
-        node.appendChild(
-          document.createTextNode(child.interpolate(structure.attributes))
-        );
+        node.appendChild(document.createTextNode(child.interpolate(structure.attributes)));
       } else {
         node.appendChild(generateStructure(child));
       }
@@ -190,7 +184,7 @@ root.dispatchEvent(new Event("rerender"));
 /* MINI REACT */
 
 const MiniReact = {
-  Component: class Component { },
+  Component: class Component {},
 };
 
 class Hello extends MiniReact.Component {
@@ -230,11 +224,7 @@ class UserList extends MiniReact.Component {
       this.state.users.map((user) =>
         user === this.state.currentUser
           ? undefined
-          : MiniReact.createElement(
-            "li",
-            { onClick: () => this.setState({ currentUser: user }) },
-            [user]
-          )
+          : MiniReact.createElement("li", { onClick: () => this.setState({ currentUser: user }) }, [user])
       )
     );
     return {
@@ -260,9 +250,7 @@ class App extends MiniReact.Component {
     users: [1, 2, 3],
   };
   render() {
-    return this.state.users.map((user) =>
-      MiniReact.createElement(Hello, { toWhat: user })
-    );
+    return this.state.users.map((user) => MiniReact.createElement(Hello, { toWhat: user }));
     // A faire lors de la génération type_check(props, Hello.propTypes)
     return {
       type: Hello,

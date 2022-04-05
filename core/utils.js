@@ -1,7 +1,6 @@
 // Prototypes
 
 String.prototype.interpolate = function (properties) {
-  
   let string = String(this);
   const nbProps = string.match(/{{([^}]*)}}/g).length;
 
@@ -74,29 +73,23 @@ export function type_check(variable, conf) {
   return true;
 }
 
- Object.prototype.prop_access = function prop_access(path) {
-
+Object.prototype.prop_access = function prop_access(path) {
   let obj = this;
 
-  if (path === null || path === "")
-    return false;
+  if (path === null || path === "") return false;
 
-  if (obj === null)
-    return false;
+  if (obj === null) return false;
 
-  let pathArray = path.split('.');
+  let pathArray = path.split(".");
   let newPath = "";
 
   for (let i = 0; i < pathArray.length; i++) {
     obj = obj[pathArray[i]];
 
-    if (i !== 0)
-      newPath += "." + pathArray[i];
-    else
-      newPath = pathArray[i];
+    if (i !== 0) newPath += "." + pathArray[i];
+    else newPath = pathArray[i];
 
-    if (obj === undefined)
-      return false;
+    if (obj === undefined) return false;
   }
   return true;
-} 
+};

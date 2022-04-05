@@ -48,9 +48,7 @@ function Page1() {
     for (let j = 0; j < 5; ++j) {
       const td = document.createElement("td");
       td.dataset.position = `${i}-${j}`;
-      const text = document.createTextNode(
-        data[`${i}-${j}`] ?? `Cell ${i}-${j}`
-      );
+      const text = document.createTextNode(data[`${i}-${j}`] ?? `Cell ${i}-${j}`);
       td.appendChild(text);
       tr.appendChild(td);
       td.addEventListener("click", tdClickHandler);
