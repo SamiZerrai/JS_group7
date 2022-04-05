@@ -36,7 +36,6 @@ export const MiniReact = {
           }
         } else {
           childrens.forEach((child) => {
-            //   if (child === undefined) continue;
             if (typeof child === "string") {
               if (properties && properties.prop_access("props"))
                 node.appendChild(document.createTextNode(child.interpolate(properties)));
