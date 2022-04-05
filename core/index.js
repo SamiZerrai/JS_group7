@@ -1,9 +1,10 @@
-import Component from "./component";
+import Component from "./component.js";
 
 export const MiniReact = {
     Component: Component,
 
     render: (componentClass, domElement, properties = {}) => {
+        console.log("render call");
         let prevChild = null;
         const component = new componentClass(properties);
         prevChild = component.display();
