@@ -1,10 +1,7 @@
 // Prototypes
 
 String.prototype.interpolate = function (createObject) {
-  console.log("interpolate :");
-  console.log(this);
   let string = String(this);
-
   const lengthToInterpolate = string.match(/{([^}]*)}/g).length;
 
   for (let i = 0; i < lengthToInterpolate; i++) {
@@ -20,6 +17,14 @@ Object.prototype.isClass = () => {
 };
 
 // Helpers
+
+export function type_check_v1(variable, type) {
+  if (variable === null && type === "null") return true;
+  if (Array.isArray(variable) && type === "array") return true;
+  if (Array.isArray(variable) && type === "object") return false;
+  if (variable === null && type === "object") return false;
+  return typeof variable === type;
+}
 
 export function type_check(variable, conf) {
   function type_check_v1(variable, type) {
