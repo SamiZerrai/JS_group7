@@ -10,9 +10,8 @@ export class ListDogs extends MiniReact.Component {
     fetch("https://dog.ceo/api/breeds/image/random")
       .then((resp) => resp.json())
       .then(function(data) {
-        console.log(data.message);
         let img = document.getElementById('dogImg');
-        
+        img.src = data.message;
       })
   }
 
