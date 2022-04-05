@@ -7,6 +7,10 @@ export class ListDogs extends MiniReact.Component {
   }
 
   render = () => {
-    return MiniReact.createElement(Title, null, null);
+    return MiniReact.createElement("ul", { id: "listDogs" }, [
+      MiniReact.createElement("li", { class: "dog" }, "Labrador"),
+      MiniReact.createElement("li", { class: "dog" }, "Saint Bernard"),
+      MiniReact.createElement("li", { class: "dog" }, "Yorkshire"),
+    ]);
   };
 }
